@@ -293,3 +293,7 @@ footer {
   margin-right: 8px;
   color: var(--text-color);
 }
+.logo i {
+  color: var(--accent-color);
+  margin-right: 6px;
+}
