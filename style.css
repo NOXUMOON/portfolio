@@ -210,14 +210,21 @@ nav {
 /* Watermark icon in the background of each project card, unique per project */
 .project-bg-icon {
   position: absolute;
-  z-index: -1;
-  right: -18px;
-  bottom: -24px;
-  font-size: 150px;
+  z-index: 0;
+  right: 16px;
+  bottom: 16px;
+  font-size: 120px;
   line-height: 1;
-  opacity: 0.08;
+  opacity: 0.18;
   pointer-events: none;
   transform: rotate(-8deg);
+}
+
+.project-card h3,
+.project-card p,
+.project-card a {
+  position: relative;
+  z-index: 1;
 }
 
 .project-bg-icon.esg-icon {
