@@ -81,3 +81,49 @@ function initStars() {
 }
 
 initStars();
+
+function initI18n() {
+  const STORAGE_KEY = 'preferredLang';
+  const toggleBtn = document.getElementById('lang-toggle');
+  const translatable = document.querySelectorAll('[data-tr]');
+  const titles = {
+    en: 'Muhsin Rezai Shiraze — Portfolio',
+    tr: 'Muhsin Rezai Shiraze — Portfolyo',
+  };
+
+  // Cache the original (English) text before any swapping happens.
+  translatable.forEach((el) => {
+    el.dataset.en = el.textContent;
+  });
+
+  function detectDefaultLang() {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored === 'en' || stored === 'tr') return stored;
+
+    const browserLangs = navigator.languages || [navigator.language || ''];
+    const isTurkish = browserLangs.some((l) => l.toLowerCase().startsWith('tr'));
+    return isTurkish ? 'tr' : 'en';
+  }
+
+  function applyLang(lang) {
+    translatable.forEach((el) => {
+      el.textContent = lang === 'tr' ? el.dataset.tr : el.dataset.en;
+    });
+    document.documentElement.lang = lang;
+    document.title = titles[lang] || titles.en;
+    if (toggleBtn) toggleBtn.textContent = lang === 'tr' ? 'EN' : 'TR';
+    localStorage.setItem(STORAGE_KEY, lang);
+  }
+
+  let currentLang = detectDefaultLang();
+  applyLang(currentLang);
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      currentLang = currentLang === 'tr' ? 'en' : 'tr';
+      applyLang(currentLang);
+    });
+  }
+}
+
+initI18n();

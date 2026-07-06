@@ -82,6 +82,23 @@ nav {
   color: var(--accent-color);
 }
 
+.lang-toggle {
+  font-family: inherit;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.lang-toggle:hover {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
 /* push page content below the fixed header */
 #hero {
   padding-top: 160px;
