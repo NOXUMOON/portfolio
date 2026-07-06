@@ -337,3 +337,67 @@ footer {
   color: var(--accent-color);
   margin-right: 6px;
 }
+
+/* Press-in / spring-back feedback on the offset-shadow buttons */
+.hero-links a,
+.contact-links a,
+.project-card a,
+.lang-toggle {
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.hero-links a:active,
+.contact-links a:active {
+  transform: translate(5px, 5px);
+  box-shadow: 0px 0px 0px var(--border-color);
+}
+
+.project-card a:active {
+  transform: translate(5px, 5px);
+  box-shadow: 0px 0px 0px var(--accent-color);
+}
+
+.lang-toggle:active {
+  transform: scale(0.9);
+}
+
+/* Click impact effect: ripple + scattering "star" sparks */
+.click-ripple {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-color);
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0.8;
+  z-index: 9999;
+  animation: click-ripple-expand 0.6s ease-out forwards;
+}
+
+@keyframes click-ripple-expand {
+  to {
+    transform: translate(-50%, -50%) scale(7);
+    opacity: 0;
+  }
+}
+
+.click-spark {
+  position: fixed;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 4px 1px rgba(255, 255, 255, 0.8);
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  animation: click-spark-fly 0.7s ease-out forwards;
+}
+
+@keyframes click-spark-fly {
+  to {
+    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.3);
+    opacity: 0;
+  }
+}

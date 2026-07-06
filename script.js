@@ -127,3 +127,47 @@ function initI18n() {
 }
 
 initI18n();
+
+function initClickImpact() {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) return;
+
+  const SPARK_COUNT = 14;
+  const CLICKABLE_SELECTOR = 'a, button';
+
+  function spawnRipple(x, y) {
+    const ripple = document.createElement('div');
+    ripple.className = 'click-ripple';
+    ripple.style.left = `${x}px`;
+    ripple.style.top = `${y}px`;
+    document.body.appendChild(ripple);
+    ripple.addEventListener('animationend', () => ripple.remove());
+  }
+
+  function spawnSparks(x, y) {
+    for (let i = 0; i < SPARK_COUNT; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 40 + Math.random() * 90;
+      const dx = Math.cos(angle) * distance;
+      const dy = Math.sin(angle) * distance;
+
+      const spark = document.createElement('div');
+      spark.className = 'click-spark';
+      spark.style.left = `${x}px`;
+      spark.style.top = `${y}px`;
+      spark.style.setProperty('--dx', `${dx}px`);
+      spark.style.setProperty('--dy', `${dy}px`);
+      spark.style.animationDelay = `${Math.random() * 0.05}s`;
+      document.body.appendChild(spark);
+      spark.addEventListener('animationend', () => spark.remove());
+    }
+  }
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest(CLICKABLE_SELECTOR)) return;
+    spawnRipple(e.clientX, e.clientY);
+    spawnSparks(e.clientX, e.clientY);
+  });
+}
+
+initClickImpact();
