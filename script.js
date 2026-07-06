@@ -17,6 +17,10 @@ function initStars() {
   const container = document.getElementById('stars-canvas');
   if (!container || typeof THREE === 'undefined') return;
 
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isMobile = window.innerWidth < 600;
+  const starCount = isMobile ? 1500 : 5000;
+
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(
     75,
@@ -28,13 +32,13 @@ function initStars() {
 
   const renderer = new THREE.WebGLRenderer({ alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
   container.appendChild(renderer.domElement);
 
   const geometry = new THREE.BufferGeometry();
   geometry.setAttribute(
     'position',
-    new THREE.BufferAttribute(randomInSphere(5000, 1.2), 3)
+    new THREE.BufferAttribute(randomInSphere(starCount, 1.2), 3)
   );
 
   const stars = new THREE.Points(
@@ -50,6 +54,19 @@ function initStars() {
   stars.rotation.z = Math.PI / 4;
   scene.add(stars);
 
+  // Always render at least one static frame so the starfield is visible
+  // even when animation is skipped for reduced-motion users.
+  renderer.render(scene, camera);
+
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    if (prefersReducedMotion) renderer.render(scene, camera);
+  });
+
+  if (prefersReducedMotion) return;
+
   const clock = new THREE.Clock();
 
   function animate() {
@@ -61,12 +78,6 @@ function initStars() {
   }
 
   animate();
-
-  window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  });
 }
 
 initStars();
