@@ -297,7 +297,8 @@ footer {
     align-items: center;
   }
 }
-#star-container {
+/* Moving 3D starfield (rendered by Three.js in script.js) */
+#stars-canvas {
   position: fixed;
   top: 0;
   left: 0;
@@ -307,16 +308,8 @@ footer {
   pointer-events: none;
 }
 
-.star {
-  position: absolute;
-  background-color: #ffffff;
-  border-radius: 50%;
-  animation: twinkle 3s infinite ease-in-out;
-}
-
-@keyframes twinkle {
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 1; }
+#stars-canvas canvas {
+  display: block;
 }
 .skill-badge i {
   font-size: 1.4rem;
