@@ -207,7 +207,6 @@ nav {
   margin-bottom: 12px;
 }
 
-/* Watermark icon in the background of each project card, unique per project */
 .project-bg-icon {
   position: absolute;
   z-index: 0;
@@ -219,6 +218,7 @@ nav {
   pointer-events: none;
   transform: rotate(-8deg);
 }
+
 
 .project-card h3,
 .project-card p,
