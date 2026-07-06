@@ -189,6 +189,8 @@ nav {
 }
 
 .project-card {
+  position: relative;
+  overflow: hidden;
   background-color: var(--surface-color);
   border: 1px solid var(--border-color);
   box-shadow: 6px 6px 0px var(--border-color);
@@ -203,6 +205,27 @@ nav {
 
 .project-card p {
   margin-bottom: 12px;
+}
+
+/* Watermark icon in the background of each project card, unique per project */
+.project-bg-icon {
+  position: absolute;
+  z-index: -1;
+  right: -18px;
+  bottom: -24px;
+  font-size: 150px;
+  line-height: 1;
+  opacity: 0.08;
+  pointer-events: none;
+  transform: rotate(-8deg);
+}
+
+.project-bg-icon.esg-icon {
+  color: var(--accent-color);
+}
+
+.project-bg-icon.leaf-icon {
+  color: #3fb950;
 }
 
 .project-tech {
